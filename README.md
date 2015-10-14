@@ -32,8 +32,13 @@ Some interesting data structures and algorithms implemented in Python.
 * Fenwick Tree
 * Suffix Tree
 
+## Graph
+
+* Graph
+
 ## Algorithms
 
+* Dijkstra
 * Knuth-Morris-Pratt
 
 ### Pending
