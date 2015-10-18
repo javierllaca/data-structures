@@ -2,6 +2,7 @@ from math import sqrt
 
 
 class Rational:
+
     def __init__(self, num=0, denom=1):
         self.num = num
         self.denom = denom

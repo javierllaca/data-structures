@@ -6,8 +6,7 @@ def max_submatrix(a):
         ] for _ in range(n)
         ] for _ in range(n)
     ]
-    max_sum = float('-inf')
-    m_i, m_j, m_x, m_y = 0, 0, 0, 0
+    max_sum = (float('-inf'), (0, 0, 0, 0))
     for i in range(n):
         for j in range(n):
             for x in range(i, n):
@@ -23,11 +22,12 @@ def max_submatrix(a):
                         dp[i][j][x][y] += dp[i][j][x - 1][y]
                     elif y > j:
                         dp[i][j][x][y] += dp[i][j][x][y - 1]
-                    if dp[i][j][x][y] > max_sum:
-                        max_sum = dp[i][j][x][y]
-                        m_i, m_j, m_x, m_y = i, j, x, y
-    m = [row[m_j:m_y + 1] for row in a[m_i:m_x + 1]]
-    return m_i, m_j, m_x, m_y, m
+                    max_sum = max(max_sum, (dp[i][j][x][y], (i, j, x, y)))
+    return max_sum
+
+
+def submatrix(a, i, j, x, y):
+    return [row[j:y + 1] for row in a[i:x + 1]]
 
 
 def print_matrix(a):
@@ -38,10 +38,11 @@ def print_matrix(a):
 
 
 def test(a):
-    i, j, x, y, m = max_submatrix(a)
     print_matrix(a)
-    print '-' * 50
-    print_matrix(m)
+    s, coords = max_submatrix(a)
+    print '\n({})\n'.format(s)
+    print_matrix(submatrix(a, *coords))
+    print '\n{}\n'.format('-' * 50)
 
 
 test([
@@ -49,7 +50,7 @@ test([
     [3, 4, 5],
     [6, 7, 8]
 ])
-print
+
 test([
     [1, -1, 2],
     [-2, 3, 4],

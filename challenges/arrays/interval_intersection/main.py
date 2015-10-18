@@ -12,12 +12,6 @@ def intersection(l1, l2):
             res.append((max(a1, a2), min(b1, b2)))
             i += 1
             j += 1
-    while i < len(l1):
-        res.append(l1[i])
-        i += 1
-    while j < len(l2):
-        res.append(l2[j])
-        j += 1
     return res
 
 

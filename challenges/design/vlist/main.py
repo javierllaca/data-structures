@@ -45,7 +45,7 @@ class VList:
 
     def value_at(self, i):
         if i > self.size - 1:
-            raise Exception("out of bounds")
+            return None
         x = int(log(i, 2))
         j = self.nodes - x - 1
         n = self.tail
@@ -55,10 +55,10 @@ class VList:
         return n.key[i - 2 ** x]
 
     def __str__(self):
-        s = '-> '
+        s = ''
         n = self.tail
         while n:
-            s += str(n.key) + ' -> '
+            s += str(n.key) + ' '
             n = n.next
         return s
 

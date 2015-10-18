@@ -40,6 +40,11 @@ def test(a, b):
     assert l1 + l2 == l3
 
 
-test(10, 13)
-test(0, 0)
-test(1, 1)
+tests = [
+    (10, 13),
+    (0, 0),
+    (1, 1)
+]
+
+for a, b in tests:
+    test(a, b)

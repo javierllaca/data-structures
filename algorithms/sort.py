@@ -1,4 +1,4 @@
-import time
+from time import time
 from random import randrange
 
 
@@ -21,11 +21,9 @@ def merge_sort(a, aux, lo, hi):
 def merge(a, aux, lo, mid, hi):
     for i in range(lo, hi + 1):
         aux[i] = a[i]
-
     aux_a = lo
     aux_b = mid + 1
     current = lo
-
     while aux_a <= mid and aux_b <= hi:
         if aux[aux_a] <= aux[aux_b]:
             a[current] = aux[aux_a]
@@ -34,7 +32,6 @@ def merge(a, aux, lo, mid, hi):
             a[current] = aux[aux_b]
             aux_b += 1
         current += 1
-
     remaining = mid - aux_a
     for i in range(remaining + 1):
         a[current + i] = aux[aux_a + i]
@@ -119,17 +116,20 @@ def rand_arr(n, hi):
     return [randrange(hi) for i in range(n)]
 
 
-def main():
-    a = rand_arr(10000, 1000)
-    fns = [bubble_sort, selection_sort, insertion_sort, quick_sort, merge_sort]
-    for fn in fns:
-        copy = list(a)
-        start = time.time()
-        sort(copy, fn)
-        elapsed = time.time() - start
-        assert is_sorted(copy)
-        print elapsed
+a = rand_arr(10000, 1000)
 
+fns = [
+    bubble_sort,
+    selection_sort,
+    insertion_sort,
+    quick_sort,
+    merge_sort
+]
 
-if __name__ == '__main__':
-    main()
+for fn in fns:
+    copy = list(a)
+    start = time()
+    sort(copy, fn)
+    end = time()
+    assert is_sorted(copy)
+    print end - start

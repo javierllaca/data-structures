@@ -31,13 +31,13 @@ def combinations(lists):
     return combination_list
 
 
-if __name__ == '__main__':
-    lists = [
-        ['quick', 'slow'],
-        ['brown', 'red'],
-        ['fox', 'dog']
-    ]
-    for combination in combinations(lists):
-        for s in combination:
-            print s + ' ',
-        print
+lists = [
+    ['quick', 'slow'],
+    ['brown', 'red'],
+    ['fox', 'dog']
+]
+
+for combination in combinations(lists):
+    for s in combination:
+        print s + ' ',
+    print

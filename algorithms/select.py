@@ -1,10 +1,5 @@
 from random import randrange
 from time import time
-# from math import ceil
-
-
-def median(a):
-    return sorted(a)[len(a) / 2]
 
 
 def swap(a, i, j):
@@ -34,8 +29,7 @@ def quick_select_aux(a, left, right, k):
         return a[k]
     if k < pivot_index:
         return quick_select_aux(a, left, pivot_index - 1, k)
-    else:
-        return quick_select_aux(a, pivot_index + 1, right, k)
+    return quick_select_aux(a, pivot_index + 1, right, k)
 
 
 def quick_select(a, k):
@@ -53,15 +47,25 @@ def quick_select_f(a, k):
         return pivot
     if k < len(s1):
         return quick_select_f(s1, k)
-    else:
-        return quick_select_f(s2, k - len(s1) - 1)
+    return quick_select_f(s2, k - len(s1) - 1)
+
+
+def median_of_medians(a, lo, hi):
+    medians = []
+    for i in range(lo, hi, 5):
+        b = sorted(a[i:i + 5])
+        medians.append(b[(len(b) - 1) / 2])
+    if len(medians) == 1:
+        return medians[0]
+    return median_of_medians(medians, 0, len(medians))
 
 
 def select(a, left, right, n):
     if left == right:
         return left
     for i in range(left, right):
-        pivotIndex = pivot(a, left, right)
+        pivot = median_of_medians(a, left, right)
+        pivotIndex = a[left:right].index(pivot)
         pivotIndex = partition(a, left, right, pivotIndex)
         if n == pivotIndex:
             return n
@@ -71,60 +75,23 @@ def select(a, left, right, n):
             left = pivotIndex + 1
 
 
-def pivot(a, left, right):
-    for i in range(left, right, 5):
-        j = i + 4
-        if j > right:
-            j = right
-        median5 = partition5(a, i, j)
-        swap(a, median5, i / 5)
+n = 10000000
+m = 10000
 
-    top = left + (right - left) / 5 - 1
-    return select(a, left, top, (right - left) / 10)
+b = [randrange(m) for i in range(n)]
+c = list(b)
+d = sorted(b)
 
+k = randrange(m)
 
-def partition5(a, left, right):
-    temp = a[left:right + 1]
-    m = median(temp)
-    return temp.index(m) + left
+start = time()
+q = quick_select_f(b, k)
+end = time()
+assert q == d[k]
+print end - start
 
-
-def _main():
-    n = 10000000
-    m = 10000
-
-    b = [randrange(m) for i in range(n)]
-    c = list(b)
-    d = sorted(b)
-
-    k = randrange(m)
-
-    start = time()
-    q = quick_select_f(b, k)
-    end = time()
-    assert q == d[k]
-    print end - start
-
-    start = time()
-    q = quick_select(c, k)
-    end = time()
-    assert q == d[k]
-    print end - start
-
-
-"""
-a = [randrange(10) for i in range(10)]
-k = 8
-
-for i in range(1, 10):
-    b = list(a)
-    q = quick_select(b, i)
-    print 'quick_select({}, {}) == {}'.format(sorted(a), i, q)
-"""
-
-
-if __name__ == '__main__':
-    a = 3
-
-for i in range(10):
-    print 'i -> {}'.format(select(range(10), 0, 9, i))
+start = time()
+q = quick_select(c, k)
+end = time()
+assert q == d[k]
+print end - start
